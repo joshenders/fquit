@@ -1,7 +1,7 @@
 About
 =====
 
-"kapp" is a utility that allows you to kill processes by name in OS X. Due to
+"kapp" is a utility that allows you to kill processes by name in OSX. Due to
 OSX's unique application bundle convention, you can't always rely on the name
 of an application to match the underlying binary that is executing.
 
