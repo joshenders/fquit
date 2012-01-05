@@ -1,12 +1,24 @@
 #!/bin/bash
 
-[[ $# -ne 1 ]] && { echo "usage: $(basename $0) \"app name\"" >&2 ; exit 1; }
+if [[ "$#" -ne '1' ]]; then
+    echo "Usage: $(basename $0) \"app name\"" >&2
+    exit 1
+fi
 
 IFS=$'\n'
-appName="$(echo ${1} | tr "[:upper:]" "[:lower:]")"
-processList=($(ps -e | sed -n 's/.*\/\([^/]*\.[a]pp\)\/.*/\1/p' | tr "[:upper:]" "[:lower:]"))
 
-for ((i=0;i<${#processList[@]};i++)); do
-  [[ "${processList[$i]}" == "${appName}.app" ]] && { kill -9 $(ps -e | grep -i "[${appName:0:1}]${appName##?}.app" | awk '{print $1}'); exit $?; }
+appName="$(tr '[:upper:]' '[:lower:]' <<< $1)"
+processList=($(
+    ps -e | \
+    sed -n 's/.*\/\([^/]*\.[a]pp\)\/.*/\1/p' | \
+    tr '[:upper:]' '[:lower:]'
+))
+
+for ((i=0; i<${#processList[@]}; i++)); do
+    if [[ "${processList[$i]}" == "${appName}.app" ]]; then
+      kill -9 $(ps -e | grep -i "[${appName:0:1}]${appName##?}.app" | awk '{print $1}')
+      exit $?
+    fi
 done
-  echo "${1} is not currently running"
+
+echo "$1 is not currently running"
