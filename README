@@ -1,5 +1,10 @@
-kapp is a program that makes killing processes by name much more convenient under OSX.
+About
+=====
 
-Normally when an application hangs, one would use a command like `ps ax | grep appname` to find the applicable PID to kill. To make this easier, the `killall` command was introduced in some Unix-like enviroments. Although the `killall` command is available in OSX, killing processes by name is not ideal because by design in OSX, the application's name, as you know it, is not always the actual name of the running binary. This is due to the OSX's unique, "opaque" application-folder convention. For the uninitiated, right click any .app in Finder and select "Show Package Contents" to illustrate this point more clearly.
+"kapp" is a utility that allows you to kill processes by name in OS X. Due to
+OSX's unique application bundle convention, you can't always rely on the name
+of an application to match the underlying binary that is executing.
 
-The standard `killall` sends SIGTERM. I may implement a signal specification in the future but for the time being, SIGKILL is used by default. This means your applications will die a terrible, awful, horrible instantaneous death and won't have a chance to run any cleanup routines they might have planned. In other words, kapp should be considered as much of a last resort as the `kill -9` it's wrapped around.
+`killall <name>` is a common invocation for this task when you know the
+binary's name but when you don't, I find `kapp <name>` a lot more convenient
+than a `ps` followed by a `kill <pid>`.
